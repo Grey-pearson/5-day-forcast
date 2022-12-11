@@ -1,8 +1,9 @@
 let apiKey = "abcc66694ca1018668923524441c6829"
-let city = ''
-let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey
+
+// let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + searchTerm + "&appid=" + apiKey
 let searchBar = $('#searchBar')
 let content = $('button')
+let city = ''
 
 // fetch(queryURL)
 //   .then((response) => response.json())
@@ -19,7 +20,8 @@ let content = $('button')
 
 
 content.on('click', function(){
-    city = searchBar.val()
-    console.log(city)
+    const searchTerm = searchBar.value
+    console.log(searchTerm)
+    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey
     fetch(queryURL).then((response) => response.json()).then((data) => console.log(data));
 })
