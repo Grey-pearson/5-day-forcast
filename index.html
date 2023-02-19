@@ -28,14 +28,16 @@
     <section id="content" class="container-fluid">
         <div class="row">
             <aside id="citySearch" class="col-lg-3 bg-light">
-                <h1>search for a city</h1>
-                <input id="searchBar" type="text" placeholder="Enter a city" class="form-control">
-                <div class="d-grid">
-                    <button id="searchButton" class="btn btn-success" type="button">Search Weather</button>
-                </div>
+                <form id="search" onsubmit="search(event)">
+                    <h1>search for a city</h1>
+                    <input id="searchBar" type="text" placeholder="Enter a city" class="form-control">
+                    <div class="d-grid">
+                        <button id="searchButton" class="btn btn-success" type="button">Search Weather</button>
+                    </div>
+                </form>
                 <br> <!-- create break line basicly -->
                 <div id="searchHistory">
-                    <button class="col-lg-11 card m-3">testing</button>
+                    <button onclick="recallSearch(event)" class="col-lg-11 card m-3 recall">testing</button>
                 </div>
             </aside>
 

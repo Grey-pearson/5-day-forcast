@@ -1,25 +1,37 @@
-let apiKey = ""
-let search = document.getElementById('searchButton')
+let apiKey = "abcc66694ca1018668923524441c6829"
+// let search = document.getElementById('search')
 let day1 = document.querySelector('#day1')
 let day2 = document.querySelector('#day2')
 let day3 = document.querySelector('#day3')
 let day4 = document.querySelector('#day4')
 let day5 = document.querySelector('#day5')
+let recall = document.querySelector('.recall')
 // make var for each used element and have to do creating element funciton
 
 // api reponse.list has 40 objects
 // each usable object on api response.list[0, 8, 16, 34, 42]
 
-search.on('click', function () {
+function search(event) {
+    event.preventDefault()
+    console.log(recallSearch)
     let city = document.getElementById("searchBar").value;
     let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`
     fetch(queryURL).then((response) => response.json()).then((data) => displayWeather(data, city));
     recordSearch(city)
-})
+    return
+}
+
+function recallSearch(event, city) {
+    event.preventDefault()
+    console.log(event)
+    console.log(city)
+    let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`
+    fetch(queryURL).then((response) => response.json()).then((data) => displayWeather(data, city));
+    return
+}
 
 // only appends data to html for weather
 function displayWeather(data, city) {
-    console.log(data)
     // let day0 = data.list[0]
     // let day1 = data.list[8]
     // let day2 = data.list[16]
@@ -72,82 +84,81 @@ function icon(data) {
     let image
     switch (data) {
         case '01d':
-            console.log(1)
+            // console.log(1)
             image = 'http://openweathermap.org/img/wn/01d@2x.png'
             break
         case '01n':
-            console.log(1)
+            // console.log(1)
             image = 'http://openweathermap.org/img/wn/01d@2x.png'
             break
         case '02d':
-            console.log(2)
+            // console.log(2)
             image = 'http://openweathermap.org/img/wn/02d@2x.png'
             break
         case '02n':
-            console.log(2)
+            // console.log(2)
             image = 'http://openweathermap.org/img/wn/02d@2x.png'
             break
         case '03d':
-            console.log(3)
+            // console.log(3)
             image = 'http://openweathermap.org/img/wn/03d@2x.png'
             break
         case '03n':
-            console.log(3)
+            // console.log(3)
             image = 'http://openweathermap.org/img/wn/03d@2x.png'
             break
         case '04d':
-            console.log(4)
+            // console.log(4)
             image = 'http://openweathermap.org/img/wn/04d@2x.png'
             break
         case '04n':
-            console.log(4)
+            // console.log(4)
             image = 'http://openweathermap.org/img/wn/04d@2x.png'
             break
         case '09d':
-            console.log(5)
+            // console.log(5)
             image = 'http://openweathermap.org/img/wn/09d@2x.png'
             break
         case '09n':
-            console.log(5)
+            // console.log(5)
             image = 'http://openweathermap.org/img/wn/09d@2x.png'
             break
         case '10d':
-            console.log(6)
+            // console.log(6)
             image = 'http://openweathermap.org/img/wn/10d@2x.png'
             break
         case '10n':
-            console.log(6)
+            // console.log(6)
             image = 'http://openweathermap.org/img/wn/10d@2x.png'
             break
         case '11d':
-            console.log(7)
+            // console.log(7)
             image = 'http://openweathermap.org/img/wn/11d@2x.png'
             break
         case '11n':
-            console.log(7)
+            // console.log(7)
             image = 'http://openweathermap.org/img/wn/11d@2x.png'
             break
         case '13d':
-            console.log(8)
+            // console.log(8)
             image = 'http://openweathermap.org/img/wn/13d@2x.png'
             break
         case '13n':
-            console.log(8)
+            // console.log(8)
             image = 'http://openweathermap.org/img/wn/13d@2x.png'
             break
         case '50d':
-            console.log(9)
+            // console.log(9)
             image = 'http://openweathermap.org/img/wn/50d@2x.png'
             break
         case '50n':
-            console.log(9)
+            // console.log(9)
             image = 'http://openweathermap.org/img/wn/50d@2x.png'
             break
         default:
-            console.log(10)
+            // console.log(10)
             image = ''
     }
-    console.log(image)
     return image
 }
 
@@ -155,5 +166,15 @@ function icon(data) {
 // only to save searches and create the list elements
 function recordSearch(city) {
     console.log(city)
-    search
-}
+    const history = document.getElementById("searchHistory")
+    // console.log(history)
+    const button = document.createElement("button")
+    // const txt = createTextNode(city)
+    button.classList.add("col-lg-11");
+    button.classList.add("card");
+    button.classList.add("m-3");
+    button.classList.add("recall");
+    button.setAttribute('onclick', `recallSearch(event, "${city}")`);
+    button.innerHTML = city
+    history.appendChild(button)
+} 
