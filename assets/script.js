@@ -13,7 +13,6 @@ let recall = document.querySelector('.recall')
 
 function search(event) {
     event.preventDefault()
-    console.log(recallSearch)
     let city = document.getElementById("searchBar").value;
     let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`
     fetch(queryURL).then((response) => response.json()).then((data) => displayWeather(data, city));
@@ -23,8 +22,6 @@ function search(event) {
 
 function recallSearch(event, city) {
     event.preventDefault()
-    console.log(event)
-    console.log(city)
     let queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`
     fetch(queryURL).then((response) => response.json()).then((data) => displayWeather(data, city));
     return
@@ -62,7 +59,6 @@ function displayWeather(data, city) {
 
     // day4
     day4.querySelector('.date').innerHTML = data.list[29].dt_txt
-    console.log('icon')
     day4.querySelector('.icon').src = icon(data.list[29].weather[0].icon)
     day4.querySelector('.temp').innerHTML = `${data.list[29].main.temp} K`
     day4.querySelector('.wind').innerHTML = `${data.list[29].wind.speed} m/s`
@@ -80,83 +76,63 @@ function displayWeather(data, city) {
 }
 
 function icon(data) {
-    console.log(data)
     let image
     switch (data) {
         case '01d':
-            // console.log(1)
             image = 'http://openweathermap.org/img/wn/01d@2x.png'
             break
         case '01n':
-            // console.log(1)
             image = 'http://openweathermap.org/img/wn/01d@2x.png'
             break
         case '02d':
-            // console.log(2)
             image = 'http://openweathermap.org/img/wn/02d@2x.png'
             break
         case '02n':
-            // console.log(2)
             image = 'http://openweathermap.org/img/wn/02d@2x.png'
             break
         case '03d':
-            // console.log(3)
             image = 'http://openweathermap.org/img/wn/03d@2x.png'
             break
         case '03n':
-            // console.log(3)
             image = 'http://openweathermap.org/img/wn/03d@2x.png'
             break
         case '04d':
-            // console.log(4)
             image = 'http://openweathermap.org/img/wn/04d@2x.png'
             break
         case '04n':
-            // console.log(4)
             image = 'http://openweathermap.org/img/wn/04d@2x.png'
             break
         case '09d':
-            // console.log(5)
             image = 'http://openweathermap.org/img/wn/09d@2x.png'
             break
         case '09n':
-            // console.log(5)
             image = 'http://openweathermap.org/img/wn/09d@2x.png'
             break
         case '10d':
-            // console.log(6)
             image = 'http://openweathermap.org/img/wn/10d@2x.png'
             break
         case '10n':
-            // console.log(6)
             image = 'http://openweathermap.org/img/wn/10d@2x.png'
             break
         case '11d':
-            // console.log(7)
             image = 'http://openweathermap.org/img/wn/11d@2x.png'
             break
         case '11n':
-            // console.log(7)
             image = 'http://openweathermap.org/img/wn/11d@2x.png'
             break
         case '13d':
-            // console.log(8)
             image = 'http://openweathermap.org/img/wn/13d@2x.png'
             break
         case '13n':
-            // console.log(8)
             image = 'http://openweathermap.org/img/wn/13d@2x.png'
             break
         case '50d':
-            // console.log(9)
             image = 'http://openweathermap.org/img/wn/50d@2x.png'
             break
         case '50n':
-            // console.log(9)
             image = 'http://openweathermap.org/img/wn/50d@2x.png'
             break
         default:
-            // console.log(10)
             image = ''
     }
     return image
@@ -165,9 +141,7 @@ function icon(data) {
 
 // only to save searches and create the list elements
 function recordSearch(city) {
-    console.log(city)
     const history = document.getElementById("searchHistory")
-    // console.log(history)
     const button = document.createElement("button")
     // const txt = createTextNode(city)
     button.classList.add("col-lg-11");
@@ -177,4 +151,28 @@ function recordSearch(city) {
     button.setAttribute('onclick', `recallSearch(event, "${city}")`);
     button.innerHTML = city
     history.appendChild(button)
-} 
+    window.localStorage.setItem('city', city)
+    console.log(window.localStorage.getItem('city'))
+    saveCity(city)
+}
+
+function loadSavedCity() {
+    var city = localStorage.getItem('city');
+    // if (city) {
+    //     city = JSON.parse(city);
+    // } else {
+    //     city = [];
+    // }
+    // return city;
+    // city.replace(/"|'/g, '') 
+    // console.log(city.replace(/"|'/g, ''))
+    recordSearch(city)
+
+}
+
+
+function saveCity(city) {
+    localStorage.setItem('city', JSON.stringify(city));
+}
+
+loadSavedCity()
